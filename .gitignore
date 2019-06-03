@@ -1,6 +1,6 @@
 build/
 build/generated-sources/ap-source-output/model/
 nbproject/
-dist/Bigmobiles.war
-setup/glassfish-resources.xml
+dist/
+setup/
 build.xml
