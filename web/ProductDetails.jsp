@@ -16,7 +16,8 @@
         <title>JSP Page</title>
         <script src="js/ajaxcart.js"></script>
         <link type="text/css" rel="stylesheet" href="css/rating.css">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">      
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
         <jsp:include page="linkcss.jsp"></jsp:include>
         </head>
         <body>
@@ -212,11 +213,29 @@
                                 <div class="single-add-to-cart">
                                     <form action="#" class="cart-quantity">
 
-                                        <button class="add-to-cart" onclick='addProductToCart("${product.productID}")' type="submit">Add to cart</button>
+                                           <button class="add-to-cart" onclick='addProductToCart("${product.productID}")' type="submit">Add to cart</button>
                                     </form>
                                 </div>
                                 <div class="product-additional-info pt-25">
-                                    <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a>
+                                    <c:choose>
+                                        <c:when test="${sessionScope.LOGIN_CUSTOMER eq null}">
+                                            <a class="wishlist-btn" href="" onclick='location.href = "logreg.jsp"'><i class="fa fa-heart-o"></i>Add to wishlist</a>
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:choose>
+                                                <c:when test="${sessionScope.wishlist.contains(product) eq true}">
+                                                    <a class="wishlist-btn" href="" onclick='removeProductWishlist("${product.productID}", "${sessionScope.LOGIN_CUSTOMER.customerID}")'><i class="fa fa-heart-o"></i>Remove product in wishlist</a>
+
+
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a class="wishlist-btn" href="" onclick='addProductWishlist("${product.productID}", "${sessionScope.LOGIN_CUSTOMER.customerID}")'><i class="fa fa-heart-o"></i>Add to wishlist</a>
+
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:otherwise>
+                                    </c:choose>
                                     &nbsp;&nbsp; &nbsp;&nbsp;
                                     <a class="wishlist-btn" onclick="myFunction()" href="CompareServlet?action=Add&Product_id=${product.productID}"><i class="fa fa-exchange"></i>Add to Compare</a>
 
@@ -666,53 +685,127 @@
 
 
     <script type="text/javascript">
-        function addProductToCart(productid)
-        {
-            $.ajax({
-                url: "CartServlet?command=plus&productID=" + productid,
+                                            function addProductToCart(productid)
+                                                {
+                                                    $.ajax({
+                                                    url: "CartServlet?command=plus&productID=" + productid,
                 type: "POST",
-                //data: {name: name1, price: price1, product_id: id, number: number, registerid: 75, waiter: waiterID},
-                success: function()
-                {
-                    location.reload();
+                                                    //data: {name: name1, price: price1, product_id: id, number: number, registerid: 75, waiter: waiterID},
+                                                    success: function()
+                                                    {
+                                                        location.reload();
                 }
-            });
-        }
+                                                    });
+                                                }
 
-        function edit_posale(productid)
+                                            function edit_posale(productid)
         {
-            var qt1 = $('#qt' + productid).val();
-            if (qt1 > 99) {
-                swal("Quantity isn't more than 99");
+                                            var qt1 = $('#qt' + productid).val();
+                                                if (qt1 > 99) {
+                                                    swal("Quantity isn't more than 99");
             } else
             {
-                $.ajax({
-                    url: "EditCartServlet?productID=" + productid + "&quantity=" + qt1,
+                                                    $.ajax({
+                                                    url: "EditCartServlet?productID=" + productid + "&quantity=" + qt1,
                     type: "POST",
-                    success: function()
-                    {
+                                                    success: function()
+                                                    {
                         location.reload();
-                    },
-                    error: function(jqXHR, textStatus, errorThrown)
+                                                        },
+                                                    error: function(jqXHR, textStatus, errorThrown)
                     {
-                        alert(orderid + "\n" + qt1 + "\n" + productid);
-                    }
-                });
+                                                        alert(orderid + "\n" + qt1 + "\n" + productid);
+                                                    }
+                                                });
 
             }
 
-        }
+                                            }
 
     </script>
     <c:if test="${note != null}">
         <script>
-            function myFunction() {
-                alert("${note}");
-            }
+                function myFunction() {
+                    alert("${note}");             }
         </script>
     </c:if>
 
     <jsp:include page="footer.jsp"></jsp:include>
     <jsp:include page="linkscript.jsp"></jsp:include>
+    <script type="text/javascript">
+                function addProductToCart(productid)
+         {
+                $.ajax({
+                    url: "CartServlet?command=plus&productID=" + productid,
+                type: "POST",                     //data: {name: name1, price: price1, product_id: id, number: number, registerid: 75, waiter: waiterID},
+                    success: function()
+                 {
+            location.reload();
+        }
+        });
+         }
+            function addProductWishlist(productid, customerId)
+         {
+
+            $.ajax({                     url: "WishListSevlet?productId=" + productid + "&cusId=" + customerId,
+                type: "POST",
+                    //data: {name: name1, price: price1, product_id: id, number: number, registerid: 75, waiter: waiterID},
+                    success: function()
+                 {
+                       
+                        location.reload();
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert("Cannot Add");
+                 }
+             });
+
+                    }
+        function removeProductWishlist(productid, customerId)
+         {
+     $.ajax({
+                 url: "RemoveWishlistServlet?productId=" + productid + "&cusId=" + customerId,
+                 type: "POST",
+                 //data: {name: name1, price: price1, product_id: id, number: number, registerid: 75, waiter: waiterID},
+                 success: function()
+                 {
+
+                     location.reload();
+                     alert("Remove Product" + productid + " in wish list Success");
+                 },
+                 error: function(jqXHR, textStatus, errorThrown)
+                 {
+
+                     alert("Cannot Remove ");
+                 }
+             });
+         }
+         function edit_posale(productid)
+         {
+             var qt1 = $('#qt' + productid).val();
+             if (qt1 > 99) {
+                 swal("Quantity isn't more than 99");
+             } else
+             {
+                 $.ajax({
+                     url: "EditCartServlet?productID=" + productid + "&quantity=" + qt1,
+                     type: "POST",
+                     success: function()
+                     {
+                         location.reload();
+                     },
+                     error: function(jqXHR, textStatus, errorThrown)
+                     {
+                         alert(orderid + "\n" + qt1 + "\n" + productid);
+                     }
+                 });
+
+             }
+
+         }
+
+    </script>
 </body>
 </html>

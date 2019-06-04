@@ -13,6 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+     
         <jsp:include page="linkcss.jsp"></jsp:include>
         </head>
         <body>
@@ -90,7 +91,7 @@
                             <h2>
                                 <br>
 
-                                <span>Sản Phẩm Mới</span>
+                                <span>Products New</span>
                             </h2>
                             <ul class="li-sub-category-list">
                             </ul>
@@ -142,7 +143,22 @@
                                                 <div class="add-actions">
                                                     <ul class="add-actions-link">
                                                         <li class="add-cart active"><a href="" onclick='addProductToCart("${c.productID}")'>Add to cart</a></li>
-                                                        <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
+                                                            <c:choose>
+                                                                <c:when test="${sessionScope.LOGIN_CUSTOMER eq null}">
+                                                                <li><a class="links-details" onclick='location.href = "logreg.jsp"'><i class="fa fa-heart-o"></i></a></li>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <c:choose>
+                                                                            <c:when test="${sessionScope.wishlist.contains(c) eq true}">
+                                                                        <li><a class="links-details"  href="" onclick='removeProductWishlist("${c.productID}", "${sessionScope.LOGIN_CUSTOMER.customerID}")'><i class="fa fa-heart"></i></a></li>
+
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <li><a class="links-details" id="success" href="" onclick='addProductWishlist("${c.productID}", "${sessionScope.LOGIN_CUSTOMER.customerID}")'><i class="fa fa-heart-o"></i></a></li>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </c:otherwise>
+                                                                </c:choose>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -166,7 +182,7 @@
                     <div class="col-lg-12">
                         <div class="li-section-title">
                             <h2>
-                                <span>Sản Phẩm Nổi Bật</span>
+                                <span>Product Hot</span>
                             </h2>
                             <ul class="li-sub-category-list">
                             </ul>
@@ -234,10 +250,10 @@
                                                                     <c:otherwise>
                                                                         <c:choose>
                                                                             <c:when test="${sessionScope.wishlist.contains(c) eq true}">
-                                                                        <button class="add-to-wishlist" onclick='removeProductWishlist("${c.productID}", "${sessionScope.LOGIN_CUSTOMER.customerID}")'><i class="fa fa-heart" style="color: red"></i><span class="tooltipp">remove from wishlist</span></button>
+                                                                        <li><a class="links-details" href="" onclick='removeProductWishlist("${c.productID}", "${sessionScope.LOGIN_CUSTOMER.customerID}")'><i class="fa fa-heart"></i></a></li>
                                                                             </c:when>
                                                                             <c:otherwise>
-                                                                        <button class="add-to-wishlist" onclick='addProductWishlist("${c.productID}", "${sessionScope.LOGIN_CUSTOMER.customerID}")'><i class="fa fa-heart-o" ></i><span class="tooltipp">add to wishlist</span></button>
+                                                                        <li><a class="links-details" href="" onclick='addProductWishlist("${c.productID}", "${sessionScope.LOGIN_CUSTOMER.customerID}")'><i class="fa fa-heart-o"></i></a></li>
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </c:otherwise>
@@ -269,7 +285,45 @@
                     }
                 });
             }
+            function addProductWishlist(productid, customerId)
+            {
 
+                $.ajax({
+                    url: "WishListSevlet?productId=" + productid + "&cusId=" + customerId,
+                    type: "POST",
+                    //data: {name: name1, price: price1, product_id: id, number: number, registerid: 75, waiter: waiterID},
+                    success: function()
+                    {
+                      
+                        location.reload();
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert("Cannot Add");
+                    }
+                });
+
+            }
+            function removeProductWishlist(productid, customerId)
+            {
+                $.ajax({
+                    url: "RemoveWishlistServlet?productId=" + productid + "&cusId=" + customerId,
+                    type: "POST",
+                    //data: {name: name1, price: price1, product_id: id, number: number, registerid: 75, waiter: waiterID},
+                    success: function()
+                    {
+
+                        location.reload();
+                        alert("Remove Product" + productid + " in wish list Success");
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+
+                        alert("Cannot Remove ");
+                    }
+                });
+            }
             function edit_posale(productid)
             {
                 var qt1 = $('#qt' + productid).val();
@@ -293,6 +347,9 @@
                 }
 
             }
+
+        </script>
+        <script>
 
         </script>
         <jsp:include page="footer.jsp"></jsp:include>

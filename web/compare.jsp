@@ -6,11 +6,13 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script
           <jsp:include page="linkcss.jsp"></jsp:include>
     </head>
     <body>
@@ -41,8 +43,8 @@
                                             <a href="single-product.html">
                                                 <img src="uploadDir/${c.images}" alt="Product Image" height="150px">
                                             </a>
-                                            <a href="cart.html" class="ho-button ho-button-sm">
-                                                <span>ADD TO CART</span>
+                                            <a onclick='addProductToCart("${c.productID}")' href="" class="ho-button ho-button-sm">
+                                                <span>Add To Cart</span>
                                             </a>
                                         </div>
                                     </td>
@@ -101,5 +103,82 @@
          </c:if>
               <jsp:include page="footer.jsp"></jsp:include>
         <jsp:include page="linkscript.jsp"></jsp:include>
+    <script type="text/javascript">
+            function addProductToCart(productid)
+            {
+                $.ajax({
+                    url: "CartServlet?command=plus&productID=" + productid,
+                    type: "POST",
+                    //data: {name: name1, price: price1, product_id: id, number: number, registerid: 75, waiter: waiterID},
+                    success: function()
+                    {
+                        location.reload();
+                    }
+                });
+            }
+            function addProductWishlist(productid, customerId)
+            {
+
+                $.ajax({
+                    url: "WishListSevlet?productId=" + productid + "&cusId=" + customerId,
+                    type: "POST",
+                    //data: {name: name1, price: price1, product_id: id, number: number, registerid: 75, waiter: waiterID},
+                    success: function()
+                    {
+                      
+                        location.reload();
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert("Cannot Add");
+                    }
+                });
+
+            }
+            function removeProductWishlist(productid, customerId)
+            {
+                $.ajax({
+                    url: "RemoveWishlistServlet?productId=" + productid + "&cusId=" + customerId,
+                    type: "POST",
+                    //data: {name: name1, price: price1, product_id: id, number: number, registerid: 75, waiter: waiterID},
+                    success: function()
+                    {
+
+                        location.reload();
+                        alert("Remove Product" + productid + " in wish list Success");
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+
+                        alert("Cannot Remove ");
+                    }
+                });
+            }
+            function edit_posale(productid)
+            {
+                var qt1 = $('#qt' + productid).val();
+                if (qt1 > 99) {
+                    swal("Quantity isn't more than 99");
+                } else
+                {
+                    $.ajax({
+                        url: "EditCartServlet?productID=" + productid + "&quantity=" + qt1,
+                        type: "POST",
+                        success: function()
+                        {
+                            location.reload();
+                        },
+                        error: function(jqXHR, textStatus, errorThrown)
+                        {
+                            alert(orderid + "\n" + qt1 + "\n" + productid);
+                        }
+                    });
+
+                }
+
+            }
+
+        </script>
     </body>
 </html>

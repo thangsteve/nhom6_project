@@ -10,18 +10,21 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>   
 <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
- String checkout = "";
-            Customers cus = (Customers) session.getAttribute("LOGIN_CUSTOMER");
+    String checkout = "";
+    String checkWishPage = "";
+    Customers cus = (Customers) session.getAttribute("LOGIN_CUSTOMER");
     Cart cart = (Cart) session.getAttribute("cart");
     if (cart == null) {
         cart = new Cart();
         session.setAttribute("cart", cart);
     }
-      if (cus == null) {
-                checkout = "loginCheckout.jsp";
-            } else {
-                checkout = "checkout.jsp";
-            }
+    if (cus == null) {
+        checkout = "loginCheckout.jsp";
+        checkWishPage = "logreg.jsp";
+    } else {
+        checkWishPage = "getWishlistServet?customerId=" + cus.getCustomerID();
+        checkout = "checkout.jsp";
+    }
 %>
 
 <header>
@@ -43,14 +46,14 @@
                 <div class="col-lg-9 col-md-8">
                     <div class="header-top-right">
                         <ul class="ht-menu">
-  <%
+                            <%
                                 if (custom == null) {
                             %>   
                             <li>
                                 <a href="logreg.jsp">Sign in|| Sign up</a>
                             </li>
                             <%  } else {%> 
-                        <li><a href="#"><%=custom.getFullName()%></a></li>
+                            <li><a href="#"><%=custom.getFullName()%></a></li>
                             <li><a href="logoutServlet">Logout</a></li>
                                 <%       }%>
                         </ul>
@@ -86,7 +89,7 @@
                         <ul class="hm-menu">
                             <!-- Begin Header Middle Wishlist Area -->
                             <li class="hm-wishlist">
-                                <a href="wishlist.jsp">
+                                <a href="getWishlistServlet?customerId=${sessionScope.LOGIN_CUSTOMER.customerID}">
                                     <span class="cart-item-count wishlist-item-count">${countWishlist}</span>
                                     <i class="fa fa-heart-o"></i>
                                 </a>
