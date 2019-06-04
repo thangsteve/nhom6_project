@@ -19,35 +19,27 @@ import model.Admin;
 
 /**
  *
- * @author congm
+ * @author ASUS
  */
-public class loginAdminServlet extends HttpServlet {
+public class adminChangePassword extends HttpServlet {
     @EJB
     private AdminFacadeLocal adminFacade;
 
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession(true);
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            Admin ad = new Admin();
-            if ((ad = adminFacade.checkLogin(email, password)) != null) {
-                session.setAttribute("LOGIN_ADMIN", ad);
-                if (ad.getAdminState()) {
-                    request.getRequestDispatcher("adminViewDashBoard").forward(request, response);
-
-                } else {
-                    request.setAttribute("error", "Your account has been locked");
-                    request.getRequestDispatcher("loginAdmin.jsp").forward(request, response);
-
-                }
-            } else {
-                request.setAttribute("error", "Email address or password is invalid");
-                request.getRequestDispatcher("loginAdmin.jsp").forward(request, response);
-            }
-        }
+        HttpSession session = request.getSession();
+        String id = request.getParameter("adminID");
+        String password =request.getParameter("password");
+        
+        Admin ad = adminFacade.find(id);
+        ad.setPassword(password);
+        adminFacade.edit(ad);
+        session.setAttribute("ADMIN_LOGIN", adminFacade.find(id));
+        request.getRequestDispatcher("adminViewDashBoard").forward(request, response);
+   
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

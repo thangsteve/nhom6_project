@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
     <head>
         <jsp:include page="admin-main-layout.jsp"></jsp:include>
@@ -70,8 +66,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <div class="box-body">
                                             <div class="form-group">
                                                 <label for="exampleOldPassword">Old Password<span style="color:red">*</span></label>
-                                                <input type="hidden" class="form-control" id="adminID" name="adminID" value="${sessionScope.admin_login.adminID}">
-                                            <input type="hidden" class="form-control" id="curpass" name="curpass" value="${sessionScope.admin_login.password}">
+                                                <input type="hidden" class="form-control" id="adminID" name="adminID" value="${sessionScope.ADMIN_LOGIN.adminID}">
+                                            <input type="hidden" class="form-control" id="curpass" name="curpass" value="${sessionScope.ADMIN_LOGIN.password}">
                                             <input type="password" class="form-control" id="oldpassword" name="oldpassword" placeholder="Password">                                  
                                         </div>
                                         <div class="form-group">
@@ -101,22 +97,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <form id="changeInfoForm" class="form-horizontal" action="adminChangeInfo" method="post" enctype="multipart/form-data">
                                     <div class="box-body">
                                         <div class="form-group">
+                                            ${sessionScope.ADMIN_LOGIN.adminID}
                                             <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
                                             <div class="col-sm-10">
-                                                <input type="hidden" class="form-control" id="adminID" name="adminID" value="${sessionScope.admin_login.adminID}">
-                                                <input type="email" class="form-control" id="inputEmail3" name="email" placeholder="Email" value="${sessionScope.admin_login.email}" disabled="true">
+                                                <input type="hidden" class="form-control" id="adminID" name="adminID" value="${sessionScope.ADMIN_LOGIN.adminID}">
+                                                <input type="email" class="form-control" id="inputEmail3" name="email" placeholder="Email" value="${sessionScope.ADMIN_LOGIN.email}" disabled="true">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputFullName" class="col-sm-2 control-label">Name<span style="color:red">*</span></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputFullName" name="fullName" value="${sessionScope.admin_login.fullName}" placeholder="FullName" required="true">
+                                                <input type="text" class="form-control" id="inputFullName" name="fullName" value="${sessionScope.ADMIN_LOGIN.fullname}" placeholder="FullName" required="true">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputFullName" class="col-sm-2 control-label">Avatar</label>
                                             <div class="col-sm-10">
-                                                <img id="blah" src="${sessionScope.admin_login.avatar}" class="img-circle" width="80px" height="80px" alt="User Image" style="margin-bottom: 10px"/><br/>
+                                                <img id="blah" src="uploadDir/${sessionScope.ADMIN_LOGIN.avatar}" class="img-circle" width="80px" height="80px" alt="User Image" style="margin-bottom: 10px"/><br/>
                                                 <input type="file" id="exampleInputFile" name="inputImage" accept="image/*" onchange="readURL(this);" style="display: none;">
                                                 <input type="button" value="Choose image" onclick="document.getElementById('exampleInputFile').click();"/>
                                             </div>
