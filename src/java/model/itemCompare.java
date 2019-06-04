@@ -20,11 +20,12 @@ public class itemCompare {
     private String brand;
     private String feature;
     private String images;
+    private double rating;
 
     public itemCompare() {
     }
 
-    public itemCompare(String productID, String productName, String description, float price, int pquanity, String category, String brand, String feature, String images) {
+    public itemCompare(String productID, String productName, String description, float price, int pquanity, String category, String brand, String feature, String images, double rating) {
         this.productID = productID;
         this.productName = productName;
         this.description = description;
@@ -34,7 +35,18 @@ public class itemCompare {
         this.brand = brand;
         this.feature = feature;
         this.images = images;
+        this.rating = rating;
     }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    
 
     public String getProductID() {
         return productID;

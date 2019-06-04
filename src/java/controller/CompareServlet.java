@@ -9,6 +9,7 @@ package controller;
 import bean.BrandFacadeLocal;
 import bean.CategoryFacadeLocal;
 import bean.ProductsFacadeLocal;
+import bean.RatingFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -30,6 +31,8 @@ import model.itemCompare;
  */
 public class CompareServlet extends HttpServlet {
     @EJB
+    private RatingFacadeLocal ratingFacade;
+    @EJB
     private CategoryFacadeLocal categoryFacade;
     @EJB
     private BrandFacadeLocal brandFacade;
@@ -41,7 +44,7 @@ public class CompareServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-             List<Category> listCategory = categoryFacade.FindAllByStatus();
+              List<Category> listCategory = categoryFacade.FindAllByStatus();
             List<Brand> listBrand = brandFacade.FindBrandByStatus();                                
             request.setAttribute("catelist",listCategory);
             request.setAttribute("brandList",listBrand);  
@@ -61,7 +64,7 @@ public class CompareServlet extends HttpServlet {
                     //if not exist session cart
                     //add new product to cart
                     arrCom.add(new itemCompare(arrPro.getProductID(), arrPro.getProductName(), arrPro.getDescription(), (float) arrPro.getPrice(), 1,
-                            arrPro.getCategoryID().getCategoryName(), arrPro.getBrandID().getBrandName(), arrPro.getFeature(), arrPro.getImage1()));
+                            arrPro.getCategoryID().getCategoryName(), arrPro.getBrandID().getBrandName(), arrPro.getFeature(), arrPro.getImage1(),ratingFacade.agvStar(id)));
                 } else {
                     arrCom = (ArrayList<itemCompare>) session.getAttribute("compare");
                     //arrCom ID is exist
@@ -75,11 +78,11 @@ public class CompareServlet extends HttpServlet {
                             break;
                         } else if (!arrCom.get(i).getCategory().equals(arrPro.getCategoryID().getCategoryName())) {
                             checkID = true;
-                            request.setAttribute("note", "cannot add another item have category different !!");
+                            request.setAttribute("note", "Cannot Add Another Product Have Different Category  !!, Please Choose Category "+arrCom.get(i).getCategory()+" Or Delete Compare List");
                             request.getRequestDispatcher("ProductDetailsServlet?id="+id).forward(request, response);
                         }
                         else if (arrCom.size() >= 3) {
-                            request.setAttribute("note", "Compare k lớn hơn 3");
+                            request.setAttribute("note", "Compare List Cannot Bigger Than 3");
                             request.getRequestDispatcher("ProductDetailsServlet?id=" + id).forward(request, response);
                         }
                     }
@@ -87,7 +90,7 @@ public class CompareServlet extends HttpServlet {
                     if (checkID == false) {
                         // arrCart.add(new Cart(arrPro.get(0).getpId(), arrPro.get(0).getpName(), arrPro.get(0).getpPrice(), 1));
                         arrCom.add(new itemCompare(arrPro.getProductID(), arrPro.getProductName(), arrPro.getDescription(), (float) arrPro.getPrice(), 1,
-                                arrPro.getCategoryID().getCategoryName(), arrPro.getBrandID().getBrandName(), arrPro.getFeature(), arrPro.getImage1()));
+                                arrPro.getCategoryID().getCategoryName(), arrPro.getBrandID().getBrandName(), arrPro.getFeature(), arrPro.getImage1(),ratingFacade.agvStar(id)));
                     }
                 }
                 if (arrCom.isEmpty()) {

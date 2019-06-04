@@ -9,20 +9,40 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>   
 <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
 <%
- String checkout = "";
-            Customers cus = (Customers) session.getAttribute("LOGIN_CUSTOMER");
+    String checkout = "";
+    Customers cus = (Customers) session.getAttribute("LOGIN_CUSTOMER");
     Cart cart = (Cart) session.getAttribute("cart");
     if (cart == null) {
         cart = new Cart();
         session.setAttribute("cart", cart);
     }
-      if (cus == null) {
-                checkout = "loginCheckout.jsp";
-            } else {
-                checkout = "checkout.jsp";
-            }
+    if (cus == null) {
+        checkout = "loginCheckout.jsp";
+    } else {
+        checkout = "checkout.jsp";
+    }
 %>
+<style>
+    md-autocomplete .md-show-clear-button button{
+        display: none;  
+    }
+    md-autocomplete{
+        width: 100%;
+        height: 100%;
+    }
+    .md-whiteframe-1dp, .md-whiteframe-z1{
+        height: 100%;
+        box-shadow: 0 0;
+    }
+
+    md-autocomplete input:not(.md-input){
+        margin-right:70px;
+        height: 100%;
+    }
+</style>
+
 
 <header>
 
@@ -43,14 +63,14 @@
                 <div class="col-lg-9 col-md-8">
                     <div class="header-top-right">
                         <ul class="ht-menu">
-  <%
+                            <%
                                 if (custom == null) {
                             %>   
                             <li>
                                 <a href="logreg.jsp">Sign in|| Sign up</a>
                             </li>
                             <%  } else {%> 
-                        <li><a href="#"><%=custom.getFullName()%></a></li>
+                            <li><a href="#"><%=custom.getFullName()%></a></li>
                             <li><a href="logoutServlet">Logout</a></li>
                                 <%       }%>
                         </ul>
@@ -75,11 +95,37 @@
                 <!-- Begin Header Middle Right Area -->
                 <div class="col-lg-10">
                     <!-- Begin Header Middle Searchbox Area -->
-                    <form action="SearchServlet?action=searchname" method="post" class="hm-searchbox">
+<!--                    <form action="SearchServlet?action=searchname" method="post" class="hm-searchbox">
 
                         <input type="text" name="searchName" placeholder="Search product">
+
                         <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
-                    </form>
+                    </form>-->
+                    <div ng-app="DemoCtrl" ng-controller="DemoCtrl as ctrl">
+                        <form  action="SearchServlet?action=searchname" method="post" class="hm-searchbox">
+                            <md-autocomplete
+                                id="custom-template"
+                                ng-disabled="ctrl.isDisabled"
+                                md-no-cache="ctrl.noCache"
+                                md-selected-item="ctrl.selectedItem"
+                                md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                md-search-text="ctrl.searchText"
+                                md-selected-item-change="ctrl.selectedItemChange(item)"
+                                md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                md-item-text="item.proName"
+                                md-min-length="0"
+                                md-input-name="searchName"
+                                input-aria-label="Current Repository"
+                                placeholder="Search product"
+                                md-menu-class="autocomplete-custom-template"
+                                md-menu-container-class="custom-container">
+                                <md-item-template>
+                                    <img width="45" height="45" src="{{item.proImage}}" <span>{{item.proName}}</span>
+                                </md-item-template>
+                            </md-autocomplete>
+                            <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
                     <!-- Header Middle Searchbox Area End Here -->
                     <!-- Begin Header Middle Right Area -->
                     <div class="header-middle-right">
@@ -249,5 +295,95 @@
             s0.parentNode.insertBefore(s1, s0);
         })();
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        (function() {
+            'use strict';
+            angular
+                    .module('DemoCtrl', ['ngMaterial'])
+                    .controller('DemoCtrl', DemoCtrl);
+
+            function DemoCtrl($timeout, $q, $log, $http) {
+                var self = this;
+
+                self.simulateQuery = false;
+                self.isDisabled = false;
+
+                
+                 $http.get("/nhom6_project/AutoComplete")
+                .then(function(response){
+                    self.repos = loadAll(response.data);
+                });
+                
+                self.querySearch = querySearch;
+                self.selectedItemChange = selectedItemChange;
+                self.searchTextChange = searchTextChange;
+
+                // ******************************
+                // Internal methods
+                // ******************************
+
+                /**
+                 * Search for repos... use $timeout to simulate
+                 * remote dataservice call.
+                 */
+                function querySearch(query) {
+                    var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
+                            deferred;
+                    if (self.simulateQuery) {
+                        deferred = $q.defer();
+                        $timeout(function() {
+                            deferred.resolve(results);
+                        }, Math.random() * 1000, false);
+                        return deferred.promise;
+                    } else {
+                        return results;
+                    }
+                }
+
+                function searchTextChange(text) {
+                    $log.info('Text changed to ' + text);
+                }
+
+                function selectedItemChange(item) {
+                    location.replace(item.proURL);
+                    $log.info('Item changed to ' + JSON.stringify(item));
+                }
+
+                /**
+                 * Build `components` list of key/value pairs
+                 */
+                
+                function loadAll(vip) {
+                   
+                    var repos = vip;
+                    return repos.map(function(repo) {
+                        repo.value = repo.proName.toLowerCase();
+                        return repo;
+                    });
+                }
+
+                /**
+                 * Create filter function for a query string
+                 */
+                function createFilterFor(query) {
+                    var lowercaseQuery = query.toLowerCase();
+
+                    return function filterFn(item) {
+                        return (item.value.includes(lowercaseQuery));
+                    };
+
+                }
+            }
+        })();
+    </script>
+
     <!--End of Tawk.to Script-->
 </header>

@@ -284,6 +284,10 @@
         <servlet-name>AdminDetailCategoryServlet</servlet-name>
         <servlet-class>controller.AdminDetailCategoryServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AutoComplete</servlet-name>
+        <servlet-class>controller.AutoComplete</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginadmin</servlet-name>
         <url-pattern>/loginadmin</url-pattern>
@@ -570,6 +574,10 @@
     <servlet-mapping>
         <servlet-name>AdminDetailCategoryServlet</servlet-name>
         <url-pattern>/AdminDetailCategoryServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AutoComplete</servlet-name>
+        <url-pattern>/AutoComplete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

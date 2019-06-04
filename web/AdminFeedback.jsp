@@ -10,6 +10,80 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <head>
         <jsp:include page="admin-main-layout.jsp"></jsp:include>
             <title>Customer Account</title>
+            <style>
+                .not-active {
+                    pointer-events: none;
+                    cursor: default;
+                    text-decoration: none;
+                    color: black;
+                }
+                .button {
+                    background-color: #4CAF50; /* Green */
+                    border-radius: 30%;
+                    color: white;
+                    padding: 5px 5px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 12px;
+                    margin: 4px 2px;
+                    -webkit-transition-duration: 0.4s; /* Safari */
+                    transition-duration: 0.4s;
+                    cursor: pointer;
+                }
+
+                .button1 {
+                    background-color: white; 
+                    color: green; 
+                    border: 2px solid #4CAF50;
+                }
+
+                .button1:hover {
+                    background-color: #4CAF50;
+                    color: white;
+                }
+
+                .button2 {
+                    background-color: white; 
+                    color: black; 
+                    border: 2px solid #008CBA;
+                }
+
+                .button2:hover {
+                    background-color: #008CBA;
+                    color: white;
+                }
+
+                .button3 {
+                    background-color: white; 
+                    color: red; 
+                    border: 2px solid #f44336;
+                }
+
+                .button3:hover {
+                    background-color: #f44336;
+                    color: white;
+                }
+
+                .button4 {
+                    background-color: white;
+                    color: orange;
+                    border: 2px solid orange;
+                }
+
+                .button4:hover {background-color: orange;}
+
+                .button5 {
+                    background-color: white;
+                    color: black;
+                    border: 2px solid #555555;
+                }
+
+                .button5:hover {
+                    background-color: #555555;
+                    color: white;
+                }
+            </style>
 
         </head>
 
@@ -48,6 +122,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                     <th>No.</th>
                                                     <th>Full Name</th>
                                                     <th>Email</th>
+                                                    <th>Status</th>
                                                     <th>Action</th>
 
 
@@ -59,8 +134,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                     <td>${c.contactID}</td>
                                                     <td>${c.name}</td>
                                                     <td>${c.email}</td>
+                                                    <td>
+                                                        <c:if test="${c.status==true}">not seen</c:if>
+                                                        <c:if test="${c.status==false}">seen</c:if>                                                   
+                                                    </td>
                                                     <td> 
-                                                        <a href="getEmailCusServlet?contacId=${c.contactID}" class="button button1"><i class="fa fa-shopping-cart"></i>Reply</a>       
+                                                         <c:if test="${c.status==true}">
+                                                        <a href="getEmailCusServlet?contacId=${c.contactID}" class="button button3">Reply</a>
+                                                        </c:if>
+                                                        <c:if test="${c.status==false}">
+                                                        <a href="getEmailCusServlet?contacId=${c.contactID}" class="button button1">Detail</a>
+                                                        </c:if>
                                                     </td>                        
                                                 </tr>
                                             </c:forEach>

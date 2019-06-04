@@ -39,8 +39,8 @@ public class SearchServlet extends HttpServlet {
 
             request.setAttribute("catelist", listCategory);
             request.setAttribute("brandList", listBrand);
-            request.setAttribute("currfrom", 10);
-            request.setAttribute("currto", 300);
+            request.setAttribute("currfrom", productsFacade.getMaxPrice()/4*1);
+            request.setAttribute("currto", productsFacade.getMaxPrice()/4*3);
             request.setAttribute("maxPr", productsFacade.getMaxPrice());
             String action = request.getParameter("action");
             String searchName = request.getParameter("searchName");
@@ -48,10 +48,12 @@ public class SearchServlet extends HttpServlet {
                 if (searchName.isEmpty()) {
                     List<Products> listProduct = productsFacade.AllProduct();
                     request.setAttribute("listP", listProduct);
+                    request.setAttribute("productListCount", productsFacade.AllProduct().size());
                     request.getRequestDispatcher("search.jsp").forward(request, response);
                 } else {
                     List<Products> listProduct = productsFacade.SearchByName(searchName);
                     request.setAttribute("listP", listProduct);
+                    request.setAttribute("productListCount", productsFacade.SearchByName(searchName).size());
                     request.getRequestDispatcher("search.jsp").forward(request, response);
                 }
             }
@@ -66,10 +68,12 @@ public class SearchServlet extends HttpServlet {
                     request.setAttribute("currto", to);
                     request.setAttribute("maxPr", productsFacade.getMaxPrice());
                     request.setAttribute("listP", productsFacade.searchPrice(from, to));
+                    request.setAttribute("productListCount", productsFacade.searchPrice(from, to).size());
                     request.getRequestDispatcher("search.jsp").forward(request, response);
                 }
 
             }
+            
 
 //            request.setAttribute("maxPr", productsFacade.getMaxPrice());
 //            request.setAttribute("currfrom", 10);

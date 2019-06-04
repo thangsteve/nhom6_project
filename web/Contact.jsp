@@ -83,7 +83,7 @@
                    if(validateEmail(email) && validateName(name) && validateContent(content)){
                       $("#fb-content").next("span").remove();
                            $.ajax({
-                               url: "http://localhost:8080/Bigmobiles/FeedbackServlet",
+                               url: "http://localhost:8080/nhom6_project/FeedbackServlet",
                                method: 'POST',
                                data: {"email":email,"name":name,"content":content},
                                success: function(data){
@@ -115,18 +115,18 @@
                   }
                   if (error == 1){
                       $("#fb-content").next("span").remove();
-                      $("#fb-content").after("<span class=\"text-danger\">khong bo trong email</span>");
+                      $("#fb-content").after("<span class=\"text-danger\">Email Cannot Be Blank</span>");
                         return false;
                   } else if(error == 2){
                       $("#fb-content").next("span").remove();
-                      $("#fb-content").after("<span class=\"text-danger\">Email sai dinh dang</span>");
+                      $("#fb-content").after("<span class=\"text-danger\">Wrong Email Format</span>");
                         return false;
                   }
               }
               function validateName(name){
                   if(name == ""){
                       $("#fb-content").next("span").remove();
-                      $("#fb-content").after("<span class=\"text-danger\">khong bo trong ten</span>");
+                      $("#fb-content").after("<span class=\"text-danger\">Name Cannot Be Blank</span>");
                       return false;
                   }
                   return true;
@@ -134,7 +134,7 @@
               function validateContent(cn){
                   if(cn == ""){
                       $("#fb-content").next("span").remove();
-                      $("#fb-content").after("<span class=\"text-danger\">khong bo trong noidung</span>");
+                      $("#fb-content").after("<span class=\"text-danger\">Message Cannot Be Blank</span>");
                       return false;
                   }
                   return true;

@@ -10,6 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="js/ajaxcart.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Product By Brand</title>
@@ -101,7 +102,7 @@
                             <form action="SearchServlet?action=searchprice" method="post">
                                 <input type="hidden" name="from" value="${currfrom}" id="sofrom">
                                 <input type="hidden" name="to" value="${currto}" id="soto">
-                                <button type="submit" id="btn-filter">filter</button>
+                                <button type="submit" id="btn-filter" class="btn btn-info">Filter</button>
                             </form>
                             <!-- filter-sub-area end -->
                         </div>
@@ -285,7 +286,7 @@
         <jsp:include page="footer.jsp"></jsp:include>
         <jsp:include page="linkscript.jsp"></jsp:include>
             <script src="js/jquery.twbsPagination.js"></script>
-            <span id="totalrow" class="hide">${productListCountBrand}</span>
+            <span id="totalrow" class="hide">${productListCount}</span>
     </body>
     <script type="text/javascript">
                                                                     function addProductToCart(productid)

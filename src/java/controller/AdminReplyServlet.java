@@ -6,12 +6,15 @@
 
 package controller;
 
+import bean.ContactusFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Contactus;
 import tool.sentEmail;
 
 /**
@@ -19,6 +22,8 @@ import tool.sentEmail;
  * @author Tuan
  */
 public class AdminReplyServlet extends HttpServlet {
+    @EJB
+    private ContactusFacadeLocal contactusFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,10 +38,15 @@ public class AdminReplyServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            int code = Integer.parseInt(request.getParameter("contacId"));
             String to = request.getParameter("to");
                 String subject = request.getParameter("subject");
                 String message = request.getParameter("message");
                 sentEmail.send(to, subject, message);
+                
+                Contactus con=contactusFacade.find(code);
+                con.setStatus(false);
+                contactusFacade.edit(con);
                 request.setAttribute("note", "Feedback has been sent to customers ");
                 request.getRequestDispatcher("AdminFeedbackServlet").forward(request, response);
         }

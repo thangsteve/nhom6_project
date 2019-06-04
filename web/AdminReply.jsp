@@ -97,69 +97,76 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
 
                     <hr>
- 
+
+
                 </section>
-                                <section  class="invoice">
-                                <div class="row" style="background-color: white">
-                    <div class="col-md-1 "></div>
-                    <div class="col-md-11 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h3><b>Reply Feedback</b></h3>
-                                <hr>
-                                <div class="col-12 grid-margin">
-                                    <div class="card">
-                                        <div class="card-body">
 
-                                            <form class="form-sample" action="AdminReplyServlet" method="post" >
-                                                <p style="color: red" class="m-b-20">${mess}</p>
-                                                <p class="card-description"> </p>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-3 col-form-label">To</label>
-                                                            <div class="col-sm-9">
-                                                                <input type="text" name="to" value="${contac.email}" readonly="readonly" class="form-control" />
+                <c:if test="${contac.status==true}">
+
+
+                    <section  class="invoice">
+                        <div class="row" style="background-color: white">
+                            <div class="col-md-1 "></div>
+                            <div class="col-md-11 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3><b>Reply Feedback</b></h3>
+                                        <hr>
+                                        <div class="col-12 grid-margin">
+                                            <div class="card">
+                                                <div class="card-body">
+
+                                                    <form class="form-sample" action="AdminReplyServlet" method="post" >
+                                                        <input class="hidden" name="contacId" value="${contac.contactID}">
+                                                        <p style="color: red" class="m-b-20">${mess}</p>
+                                                        <p class="card-description"> </p>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-3 col-form-label">To</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" name="to" value="${contac.email}" readonly="readonly" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-3 col-form-label">Subject</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text"  value="Feedback From BigMobile" name="subject" class="form-control" required/>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-3 col-form-label">Subject</label>
-                                                            <div class="col-sm-9">
-                                                                <input type="text"  value="Feedback From BigMobile" name="subject" class="form-control" required/>
+
+
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-3 col-form-label">Message</label>
+                                                                    <div class="col-sm-9">
+                                                                        <textarea class="form-control" style="border-radius: 10px" rows="15" name="message" required></textarea>
+                                                                    </div>
+                                                                </div>
                                                             </div>
+
                                                         </div>
-                                                    </div>
+                                                        <div class="row-10">
+                                                            <div class="col-md-5"></div>
+                                                            <input  type="submit" value="Send" class="btn btn-success mr-2"/></div>
+
+
+
+                                                    </form>
                                                 </div>
-
-
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-3 col-form-label">Message</label>
-                                                            <div class="col-sm-9">
-                                                                <textarea class="form-control" style="border-radius: 10px" rows="15" name="message" required></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                            <div class="row-10">
-                                                                <div class="col-md-5"></div>
-                                                                <input  type="submit" value="Send" class="btn btn-success mr-2"/></div>
-                                                           
-                                               
-
-                                            </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-</section>
+                    </section>
+                </c:if>
             </div>  
 
 

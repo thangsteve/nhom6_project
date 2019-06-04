@@ -11,12 +11,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-          <jsp:include page="linkcss.jsp"></jsp:include>
-    </head>
-    <body>
-         <jsp:include page="header.jsp"></jsp:include>
-         <c:if test="${compare != null}">
-        <div class="breadcrumb-area">
+        <link type="text/css" rel="stylesheet" href="css/rating.css">
+        <jsp:include page="linkcss.jsp"></jsp:include>
+        </head>
+        <body>
+        <jsp:include page="header.jsp"></jsp:include>
+        <c:if test="${compare != null}">
+            <div class="breadcrumb-area">
                 <div class="container">
                     <div class="breadcrumb-content">
                         <ul>
@@ -35,71 +36,85 @@
                             <tbody>
                                 <tr>
                                     <th class="compare-column-titles">Image</th>
-                                <c:forEach var="c" items="${compare}">
-                                    <td class="compare-column-productinfo">
-                                        <div class="compare-pdoduct-image">
-                                            <a href="single-product.html">
-                                                <img src="uploadDir/${c.images}" alt="Product Image" height="150px">
-                                            </a>
-                                            <a href="cart.html" class="ho-button ho-button-sm">
-                                                <span>ADD TO CART</span>
-                                            </a>
-                                        </div>
-                                    </td>
+                                        <c:forEach var="c" items="${compare}">
+                                        <td class="compare-column-productinfo">
+                                            <div class="compare-pdoduct-image">
+                                                <a href="#">
+                                                    <img src="uploadDir/${c.images}" alt="Product Image" height="150px">
+                                                </a>
+                                                <a href="cart.html" class="ho-button ho-button-sm">
+                                                    <span>ADD TO CART</span>
+                                                </a>
+                                            </div>
+                                        </td>
                                     </c:forEach>
                                 </tr>
                                 <tr>
                                     <th>Product Name</th>
-                                <c:forEach var="c" items="${compare}">
-                                    <td>
-                                        <h5 class="compare-product-name"><a href="single-product.html">${c.productName}</a></h5>
-                                    </td>
-                                  </c:forEach>
+                                        <c:forEach var="c" items="${compare}">
+                                        <td>
+                                            <h5 class="compare-product-name"><a href="#">${c.productName}</a></h5>
+                                        </td>
+                                    </c:forEach>
                                 </tr>
-                                  <tr>
+                                <tr>
                                     <th>Brand</th>
-                                <c:forEach var="c" items="${compare}">
-                                    <td>
-                                        <h5 class="compare-product-name"><a href="single-product.html">${c.brand}</a></h5>
-                                    </td>
-                                  </c:forEach>
+                                        <c:forEach var="c" items="${compare}">
+                                        <td>
+                                            <h5 class="compare-product-name"><a href="#">${c.brand}</a></h5>
+                                        </td>
+                                    </c:forEach>
                                 </tr>
-                                  <tr>
+                                <tr>
                                     <th>Category</th>
-                                <c:forEach var="c" items="${compare}">
-                                    <td>
-                                        <h5 class="compare-product-name"><a href="single-product.html">${c.category}</a></h5>
-                                    </td>
-                                  </c:forEach>
+                                        <c:forEach var="c" items="${compare}">
+                                        <td>
+                                            <h5 class="compare-product-name"><a href="#">${c.category}</a></h5>
+                                        </td>
+                                    </c:forEach>
                                 </tr>
                                 <tr>
                                     <th>Description</th>
-                                <c:forEach var="c" items="${compare}">
-                                    <td>${c.description}</td>
-                                </c:forEach>
-                                   </tr>
+                                        <c:forEach var="c" items="${compare}">
+                                        <td>${c.description}</td>
+                                    </c:forEach>
+                                </tr>
                                 <tr>
                                     <th>Price</th>
-                                       <c:forEach var="c" items="${compare}">
-                                       <td>$ &nbsp; ${c.price}</td>
-                                </c:forEach>
+                                        <c:forEach var="c" items="${compare}">
+                                        <td>$ &nbsp; ${c.price}</td>
+                                    </c:forEach>
                                 </tr>
-                                 <tr>
+                                <tr>
                                     <th>Feature</th>
-                                       <c:forEach var="c" items="${compare}">
-                                    <td>${c.feature}</td>
-                                </c:forEach>
+                                        <c:forEach var="c" items="${compare}">
+                                        <td>${c.feature}</td>
+                                    </c:forEach>
+                                </tr>
+                                <tr>
+                                    <th>Rating</th>
+                                        <c:forEach var="c" items="${compare}" >
+                                        <td align="center">
+                                            <span class="star-rating star-5">
+                                                <input  type="radio" checked="true">
+                                                <i style="width:${(c.rating/5*100)}%"></i>   
+                                            </span>
+                                        </c:forEach>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-         </c:if>
-         <c:if test="${compare == null}">
-             <p><h3> Nothing to Compare <a href="ProductServlet">continue Shopping !! </a> </h3></p>
-         </c:if>
-              <jsp:include page="footer.jsp"></jsp:include>
-        <jsp:include page="linkscript.jsp"></jsp:include>
-    </body>
+        </c:if>
+        <c:if test="${compare == null}">
+            <br/><br/><br/><br/><br/><br/>
+        <center>
+            <p><h3> Nothing to Compare. Click <a href="ProductServlet"><span class="required">Here</span></a> to continue Shopping !!  </h3></p>
+        <br/><br/><br/><br/><br/><br/><br/>
+    </center>
+</c:if>
+<jsp:include page="footer.jsp"></jsp:include>
+<jsp:include page="linkscript.jsp"></jsp:include>
+</body>
 </html>

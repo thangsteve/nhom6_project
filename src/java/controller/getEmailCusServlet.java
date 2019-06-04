@@ -38,9 +38,7 @@ public class getEmailCusServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             int code = Integer.parseInt(request.getParameter("contacId"));
-            Contactus contac = contactusFacade.find(code);
-            //Customer khachhang = customerFacade.find(code);
-            //request.setAttribute("khachhang", khachhang);
+            Contactus contac = contactusFacade.find(code);   
             request.setAttribute("contac", contac);
             request.getRequestDispatcher("AdminReply.jsp").forward(request, response);
         }
