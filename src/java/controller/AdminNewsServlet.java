@@ -6,47 +6,42 @@
 
 package controller;
 
-import bean.AdminFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Admin;
 
 /**
  *
- * @author congm
+ * @author ASUS
  */
-public class loginAdminServlet extends HttpServlet {
-    @EJB
-    private AdminFacadeLocal adminFacade;
+public class AdminNewsServlet extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession(true);
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            Admin ad = new Admin();
-            if ((ad = adminFacade.checkLogin(email, password)) != null) {
-                session.setAttribute("LOGIN_ADMIN", ad);
-                if (ad.getAdminState()) {
-                    request.getRequestDispatcher("adminViewDashBoard").forward(request, response);
-
-                } else {
-                    request.setAttribute("error", "Your account has been locked");
-                    request.getRequestDispatcher("loginAdmin.jsp").forward(request, response);
-
-                }
-            } else {
-                request.setAttribute("error", "Email address or password is invalid");
-                request.getRequestDispatcher("loginAdmin.jsp").forward(request, response);
-            }
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AdminNewsServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AdminNewsServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

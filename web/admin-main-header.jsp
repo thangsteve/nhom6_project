@@ -24,7 +24,7 @@
                     <!-- Menu Toggle Button -->
                     <a href="adminViewDashBoard" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
-                        <img src="${sessionScope.LOGIN_ADMIN.avatar}" class="user-image"/>
+                        <img src="uploadDir/${sessionScope.LOGIN_ADMIN.avatar}" class="user-image"/>
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
                         <span class="hidden-xs">${sessionScope.LOGIN_ADMIN.fullname}</span>
                     </a>
