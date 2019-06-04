@@ -285,8 +285,49 @@
         <servlet-class>controller.AdminDetailCategoryServlet</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< HEAD
         <servlet-name>AutoComplete</servlet-name>
         <servlet-class>controller.AutoComplete</servlet-class>
+=======
+        <servlet-name>getWishListByProduct</servlet-name>
+        <servlet-class>controller.getWishListByProduct</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getWishlistServlet</servlet-name>
+        <servlet-class>controller.getWishlistServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoveWishlistServlet</servlet-name>
+        <servlet-class>controller.RemoveWishlistServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getdetailCUSTOMERServlet</servlet-name>
+        <servlet-class>controller.getdetailCUSTOMERServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeInfoCustomer</servlet-name>
+        <servlet-class>controller.ChangeInfoCustomer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditAvatarServlet</servlet-name>
+        <servlet-class>controller.EditAvatarServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>resetPasswordServlet</servlet-name>
+        <servlet-class>controller.resetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgetPasswordServlet</servlet-name>
+        <servlet-class>controller.ForgetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getLinkresetPasswordServlet</servlet-name>
+        <servlet-class>controller.getLinkresetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>changePassword</servlet-name>
+        <servlet-class>controller.changePassword</servlet-class>
+>>>>>>> d049b940d1326760f0781baeb059ec444f2ecca4
     </servlet>
     <servlet-mapping>
         <servlet-name>loginadmin</servlet-name>
@@ -576,8 +617,49 @@
         <url-pattern>/AdminDetailCategoryServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< HEAD
         <servlet-name>AutoComplete</servlet-name>
         <url-pattern>/AutoComplete</url-pattern>
+=======
+        <servlet-name>getWishListByProduct</servlet-name>
+        <url-pattern>/getWishListByProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getWishlistServlet</servlet-name>
+        <url-pattern>/getWishlistServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveWishlistServlet</servlet-name>
+        <url-pattern>/RemoveWishlistServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getdetailCUSTOMERServlet</servlet-name>
+        <url-pattern>/getdetailCUSTOMERServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeInfoCustomer</servlet-name>
+        <url-pattern>/ChangeInfoCustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditAvatarServlet</servlet-name>
+        <url-pattern>/EditAvatarServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>resetPasswordServlet</servlet-name>
+        <url-pattern>/resetPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgetPasswordServlet</servlet-name>
+        <url-pattern>/ForgetPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getLinkresetPasswordServlet</servlet-name>
+        <url-pattern>/getLinkresetPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>changePassword</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
+>>>>>>> d049b940d1326760f0781baeb059ec444f2ecca4
     </servlet-mapping>
     <session-config>
         <session-timeout>

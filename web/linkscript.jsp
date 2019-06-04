@@ -43,4 +43,7 @@
 <script src="js/main.js"></script>
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d049b940d1326760f0781baeb059ec444f2ecca4

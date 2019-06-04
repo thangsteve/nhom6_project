@@ -12,6 +12,10 @@
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
 <%
     String checkout = "";
+<<<<<<< HEAD
+=======
+    String checkWishPage = "";
+>>>>>>> d049b940d1326760f0781baeb059ec444f2ecca4
     Customers cus = (Customers) session.getAttribute("LOGIN_CUSTOMER");
     Cart cart = (Cart) session.getAttribute("cart");
     if (cart == null) {
@@ -20,7 +24,13 @@
     }
     if (cus == null) {
         checkout = "loginCheckout.jsp";
+<<<<<<< HEAD
     } else {
+=======
+        checkWishPage = "logreg.jsp";
+    } else {
+        checkWishPage = "getWishlistServet?customerId=" + cus.getCustomerID();
+>>>>>>> d049b940d1326760f0781baeb059ec444f2ecca4
         checkout = "checkout.jsp";
     }
 %>
@@ -70,7 +80,11 @@
                                 <a href="logreg.jsp">Sign in|| Sign up</a>
                             </li>
                             <%  } else {%> 
+<<<<<<< HEAD
                             <li><a href="#"><%=custom.getFullName()%></a></li>
+=======
+                            <li><a href="getdetailCUSTOMERServlet?id=${cusID}">Welcome <%=custom.getFullName()%></a>  <img class="img-sm profile-pic " style="border-radius: 50%"  height="20px" src="uploadDir/${sessionScope.LOGIN_CUSTOMER.avatar}" /></li>
+>>>>>>> d049b940d1326760f0781baeb059ec444f2ecca4
                             <li><a href="logoutServlet">Logout</a></li>
                                 <%       }%>
                         </ul>
@@ -132,7 +146,7 @@
                         <ul class="hm-menu">
                             <!-- Begin Header Middle Wishlist Area -->
                             <li class="hm-wishlist">
-                                <a href="wishlist.jsp">
+                                <a href="getWishlistServlet?customerId=${sessionScope.LOGIN_CUSTOMER.customerID}">
                                     <span class="cart-item-count wishlist-item-count">${countWishlist}</span>
                                     <i class="fa fa-heart-o"></i>
                                 </a>
@@ -194,8 +208,6 @@
             </div>
         </div>
     </div>
-    <!-- Header Middle Area End Here -->
-    <!-- Begin Header Bottom Area -->
     <div class="header-bottom header-sticky stick d-none d-lg-block d-xl-block">
         <div class="container">
             <div class="row">
@@ -222,14 +234,12 @@
                                         </c:forEach>
                                     </ul>
                                 </li>
-
                                 <li><a href="">News</a></li>
                                 <li><a href="FeedbackServlet">Contacts</a></li>
                                 <li><a href="AboutusServlet">About Us</a></li>
                                 <li class="hb-info f-right p-0 d-sm-none d-lg-block">
                                     <span>590 Cách mạng tháng 8,Quận 3,TP.Hồ Chí Minh</span>
                                 </li>
-                                <!-- Header Bottom Menu Information Area End Here -->
                             </ul>
                         </nav>
                     </div>

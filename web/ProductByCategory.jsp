@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
           <jsp:include page="linkcss.jsp"></jsp:include>
     </head>
     <body>
@@ -183,9 +184,22 @@
                                                             <div class="add-actions">
                                                                 <ul class="add-actions-link">
                                                                     <li class="add-cart active"><a href="" onclick='addProductToCart("${c.productID}")'>Add to cart</a></li>
-                                                                    <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
-                                                                    <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                                                </ul>
+                                                                        <c:choose>
+                                                                <c:when test="${sessionScope.LOGIN_CUSTOMER eq null}">
+                                                                <li><a class="wishlist" onclick='location.href = "logreg.jsp"'><i class="fa fa-heart-o"></i></a></li>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <c:choose>
+                                                                            <c:when test="${sessionScope.wishlist.contains(c) eq true}">
+                                                                        <li><a class="wishlist"  href="" onclick='removeProductWishlist("${c.productID}", "${sessionScope.LOGIN_CUSTOMER.customerID}")'><i class="fa fa-heart"></i></a></li>
+
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <li><a class="wishlist" id="success" href="" onclick='addProductWishlist("${c.productID}", "${sessionScope.LOGIN_CUSTOMER.customerID}")'><i class="fa fa-heart-o"></i></a></li>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </c:otherwise>
+                                                                </c:choose> </ul>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -237,9 +251,22 @@
                                                         <div class="shop-add-action mb-xs-30">
                                                             <ul class="add-actions-link">
                                                                 <li class="add-cart"><a href="" onclick='addProductToCart("${c.productID}")'>Add to cart</a></li>
-                                                                <li class="wishlist"><a href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a></li>
-                                                                <li><a class="quick-view" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-eye"></i>Quick view</a></li>
-                                                            </ul>
+                                                                    <c:choose>
+                                                                <c:when test="${sessionScope.LOGIN_CUSTOMER eq null}">
+                                                                <li><a class="wishlist" onclick='location.href = "logreg.jsp"'><i class="fa fa-heart-o"></i></a></li>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <c:choose>
+                                                                            <c:when test="${sessionScope.wishlist.contains(c) eq true}">
+                                                                        <li><a class="wishlist"  href="" onclick='removeProductWishlist("${c.productID}", "${sessionScope.LOGIN_CUSTOMER.customerID}")'><i class="fa fa-heart"></i></a></li>
+
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <li><a class="wishlist" id="success" href="" onclick='addProductWishlist("${c.productID}", "${sessionScope.LOGIN_CUSTOMER.customerID}")'><i class="fa fa-heart-o"></i></a></li>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </c:otherwise>
+                                                                </c:choose>     </ul>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -361,4 +388,81 @@
             }
         });
     </script>
+     <script type="text/javascript">
+            function addProductToCart(productid)
+            {
+                $.ajax({
+                    url: "CartServlet?command=plus&productID=" + productid,
+                    type: "POST",
+                    //data: {name: name1, price: price1, product_id: id, number: number, registerid: 75, waiter: waiterID},
+                    success: function()
+                    {
+                        location.reload();
+                    }
+                });
+            }
+            function addProductWishlist(productid, customerId)
+            {
+
+                $.ajax({
+                    url: "WishListSevlet?productId=" + productid + "&cusId=" + customerId,
+                    type: "POST",
+                    //data: {name: name1, price: price1, product_id: id, number: number, registerid: 75, waiter: waiterID},
+                    success: function()
+                    {
+                      
+                        location.reload();
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert("Cannot Add");
+                    }
+                });
+
+            }
+            function removeProductWishlist(productid, customerId)
+            {
+                $.ajax({
+                    url: "RemoveWishlistServlet?productId=" + productid + "&cusId=" + customerId,
+                    type: "POST",
+                    //data: {name: name1, price: price1, product_id: id, number: number, registerid: 75, waiter: waiterID},
+                    success: function()
+                    {
+
+                        location.reload();
+                        alert("Remove Product" + productid + " in wish list Success");
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+
+                        alert("Cannot Remove ");
+                    }
+                });
+            }
+            function edit_posale(productid)
+            {
+                var qt1 = $('#qt' + productid).val();
+                if (qt1 > 99) {
+                    swal("Quantity isn't more than 99");
+                } else
+                {
+                    $.ajax({
+                        url: "EditCartServlet?productID=" + productid + "&quantity=" + qt1,
+                        type: "POST",
+                        success: function()
+                        {
+                            location.reload();
+                        },
+                        error: function(jqXHR, textStatus, errorThrown)
+                        {
+                            alert(orderid + "\n" + qt1 + "\n" + productid);
+                        }
+                    });
+
+                }
+
+            }
+
+        </script>
 </html>

@@ -14,34 +14,37 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-          <jsp:include page="linkcss.jsp"></jsp:include>
-           
-    </head>
-    <body>
-        
-           <%
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.js"></script>
+
+        <script src="js/bootstrap-datepicker.js"></script>
+        <jsp:include page="linkcss.jsp"></jsp:include>
+
+        </head>
+        <body>
+
+        <%
             Cart cart = (Cart) session.getAttribute("cart");
             Customers cus = (Customers) session.getAttribute("LOGIN_CUSTOMER");
-            String gd ="";
-            if(cus.getGender()==true){
+            String gd = "";
+            if (cus.getGender() == true) {
                 gd = "Male";
-            }
-            else{
-                gd="Female";
+            } else {
+                gd = "Female";
             }
             if (cart == null) {
                 cart = new Cart();
                 session.setAttribute("cart", cart);
             }
         %>
-          <jsp:include page="header.jsp"></jsp:include>
-           <!-- Begin Li's Breadcrumb Area -->
+        <jsp:include page="header.jsp"></jsp:include>
+            <!-- Begin Li's Breadcrumb Area -->
             <div class="breadcrumb-area">
                 <div class="container">
                     <div class="breadcrumb-content">
                         <ul>
                             <li><a href="ProductServlet">Home</a></li>
-                            
+
                             <li class="active">Checkout</li>
                         </ul>
                     </div>
@@ -55,91 +58,92 @@
                         <div class="col-12">
                             <div class="coupon-accordion">
                                 <!--Accordion Start-->
-                                <h3 style="color: red">Thông Tin Đặt Hàng?<span id="showlogin">Click để xem</span></h3> 
+                                <h3 style="color: red">Information Order ? &nbsp;<span id="showlogin">Click View Information</span></h3> 
                                 <div id="checkout-login" class="coupon-content">
                                     <div class="coupon-info">
-                                       
-                                            <form action="#">
+
+                                        <form action="#">
                                             <p class="form-row-first">
-                                                <label>Họ Tên Khách Hàng<span class="required">*</span></label>
+                                                <label>Customer Name<span class="required">*</span></label>
                                                 <input type="text" value="<%=cus.getFullName()%> ">
-                                            </p>
-                                            <p class="form-row-last">
-                                                <label>Giới Tính  <span class="required">*</span></label>
-                                                <input type="text"value="<%=gd%>" >
-                                            </p>
-                                            <p class="form-row-last">
-                                                <label>Số Điện Thoại <span class="required">*</span></label>
-                                                <input type="text" value="<%=cus.getPhone()%>">
-                                            </p>
-                                             <p class="form-row-last">
-                                                <label>Email <span class="required">*</span></label>
-                                                <input type="text" value="<%=cus.getEmail()%>">
-                                            </p>
-                                          
-                                        </form> 
-                                        
-                                    </div>
+                                        </p>
+                                        <p class="form-row-last">
+                                            <label>Gender<span class="required">*</span></label>
+                                            <input type="text"value="<%=gd%>" >
+                                        </p>
+                                        <p class="form-row-last">
+                                            <label>Phone<span class="required">*</span></label>
+                                            <input type="text" value="<%=cus.getPhone()%>">
+                                        </p>
+                                        <p class="form-row-last">
+                                            <label>Email <span class="required">*</span></label>
+                                            <input type="text" value="<%=cus.getEmail()%>">
+                                        </p>
+
+                                    </form> 
+
                                 </div>
-                                <!--Accordion End-->
-                                <!--Accordion Start-->
-                               
-                                <!--Accordion End-->
                             </div>
+                            <!--Accordion End-->
+                            <!--Accordion Start-->
+
+                            <!--Accordion End-->
                         </div>
                     </div>
+                </div>
+                <form  action="PleaceOrderServlet" method="post">
                     <div class="row">
                         <div class="col-lg-6 col-12">
-                            <form action="PleaceOrderServlet" method="post">
-                                <div class="checkbox-form">
-                                    <h3>Billing Details</h3>
-                                    <div class="row">
-                                       
-                                        <div class="col-md-6">
-                                            <div class="checkout-form-list">
-                                                <label>First Name <span class="required">*</span></label>
-                                                <input placeholder="" name="firstname" type="text">
-                                            </div>
+
+                            <div class="checkbox-form">
+                                <h3>Billing Details</h3>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="checkout-form-list">
+                                            <label>First Name <span class="required">*</span></label>
+                                            <input placeholder="Enter Delivey Name"required="" name="firstname" pattern="[a-zA-Z]{1,15}" type="text">
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="checkout-form-list">
-                                                <label>Last Name<span class="required">*</span></label>
-                                                <input placeholder="" name="lastname" type="text">
-                                            </div>
-                                        </div>
-                                       
-                                        <div class="col-md-12">
-                                            <div class="checkout-form-list">
-                                                <label>Delivery Address <span class="required">*</span></label>
-                                                <input placeholder="Street address" name="address"type="text">
-                                            </div>
-                                        </div>
-                                       
-                                        <div class="col-md-12">
-                                            <div class="checkout-form-list">
-                                                <label>Phone <span class="required">*</span></label>
-                                                <input type="text" name="tel">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="checkout-form-list">
-                                                <label>Note <span class="required">*</span></label>
-                                                <input placeholder="" name="shipnote" type="text">
-                                            </div>
-                                        </div>
-                                     
-                                        <div class="col-md-6">
-                                            <div class="checkout-form-list">
-                                                <label>Delivery Date  <span class="required">*</span></label>
-                                                <input type="date" name="shipdate">
-                                            </div>
-                                        </div>
-                                       
                                     </div>
-                                 
+                                    <div class="col-md-6">
+                                        <div class="checkout-form-list">
+                                            <label>Last Name<span class="required">*</span></label>
+                                            <input placeholder="" name="lastname" pattern="[a-zA-Z]{1,15}" type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="checkout-form-list">
+                                            <label>Delivery Address <span class="required">*</span></label>
+                                            <input placeholder="Street address" name="address"type="text" required="">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="checkout-form-list">
+                                            <label>Phone <span class="required">*</span></label>
+                                            <input type="text" name="tel"required="" pattern="^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="checkout-form-list">
+                                            <label>Note <span class="required">*</span></label>
+                                            <input placeholder="" name="shipnote" type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="checkout-form-list">
+                                            <label>Delivery Date  <span class="required">*</span></label>
+                                            <input type="date" name="shipdate" value="">
+                                        </div>
+                                    </div>
+
                                 </div>
-                                 <input value="Place order" type="submit">
-                            </form>
+
+                            </div>
+                          
+
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="your-order">
@@ -153,12 +157,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                             <%for(Map.Entry<String, Item> list : cart.getCartItems().entrySet()){%>
+                                            <%for (Map.Entry<String, Item> list : cart.getCartItems().entrySet()) {%>
                                             <tr class="cart_item">
-                                              <td class="cart-product-name"><%=list.getValue().getProduct().getProductName()%><strong class="product-quantity"> × <%=list.getValue().getQuantity()%></strong></td>
-                                              <td class="cart-product-total"><span class="amount">£165.00</span></td>  
+                                                <td class="cart-product-name"><%=list.getValue().getProduct().getProductName()%><strong class="product-quantity"> × <%=list.getValue().getQuantity()%></strong></td>
+                                                <td class="cart-product-total"><span class="amount">£165.00</span></td>  
                                             </tr>
-                                           <%}%>
+                                            <%}%>
                                         </tbody>
                                         <tfoot>
                                             <tr class="cart-subtotal">
@@ -174,50 +178,7 @@
                                 </div>
                                 <div class="payment-method">
                                     <div class="payment-accordion">
-                                        <div id="accordion">
-                                          <div class="card">
-                                            <div class="card-header" id="">
-                                              <h5 class="panel-title">
-                                                <a class="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                  Direct Bank Transfer.
-                                                </a>
-                                              </h5>
-                                            </div>
-                                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
-                                              <div class="card-body">
-                                                <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div class="card">
-                                            <div class="card-header" id="">
-                                              <h5 class="panel-title">
-                                                <a class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                  Cheque Payment
-                                                </a>
-                                              </h5>
-                                            </div>
-                                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
-                                              <div class="card-body">
-                                                <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div class="card">
-                                            <div class="card-header" id="">
-                                              <h5 class="panel-title">
-                                                <a class="collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                  PayPal
-                                                </a>
-                                              </h5>
-                                            </div>
-                                            <div id="collapseThree" class="collapse" data-parent="#accordion">
-                                              <div class="card-body">
-                                                <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
+
                                         <div class="order-button-payment">
                                             <input value="Place order" type="submit">
                                         </div>
@@ -226,9 +187,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
-          <jsp:include page="footer.jsp"></jsp:include>
-           <jsp:include page="linkscript.jsp"></jsp:include>
+        </div>
+        <jsp:include page="footer.jsp"></jsp:include>
+        <jsp:include page="linkscript.jsp"></jsp:include>
+
+
     </body>
 </html>

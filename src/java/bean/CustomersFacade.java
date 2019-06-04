@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package bean;
 
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ import model.Customers;
  */
 @Stateless
 public class CustomersFacade extends AbstractFacade<Customers> implements CustomersFacadeLocal {
+
     @PersistenceContext(unitName = "BigmobilesPU")
     private EntityManager em;
 
@@ -34,7 +34,7 @@ public class CustomersFacade extends AbstractFacade<Customers> implements Custom
 
     @Override
     public Customers checkLogin(String email, String password) {
-          Customers custom = new Customers();
+        Customers custom = new Customers();
         try {
             Query query = em.createQuery("SELECT c FROM Customers c WHERE c.email = :email and c.password = :password");
             query.setParameter("email", email);
@@ -49,24 +49,33 @@ public class CustomersFacade extends AbstractFacade<Customers> implements Custom
 
     @Override
     public boolean checkMail(String email) {
-          Query q = em.createQuery("SELECT c FROM Customers c WHERE c.email = :email");
+        Query q = em.createQuery("SELECT c FROM Customers c WHERE c.email = :email");
         q.setParameter("email", email);
         List<Customers> list = new ArrayList<Customers>();
         list = q.getResultList();
         if (list.isEmpty()) {
             return true;
         }
-        return false; }
+        return false;
+    }
 
     @Override
     public boolean checkPhone(String phone) {
-       Query q = em.createQuery("SELECT c FROM Customers c WHERE c.phone = :phone");
+        Query q = em.createQuery("SELECT c FROM Customers c WHERE c.phone = :phone");
         q.setParameter("phone", phone);
         List<Customers> list = new ArrayList<Customers>();
         list = q.getResultList();
         if (list.isEmpty()) {
             return true;
         }
-        return false; }
-   
+        return false;
+    }
+
+    @Override
+    public List<Customers> findByMail(String email) {
+        Query q = getEntityManager().createQuery("SELECT c FROM Customers c WHERE c.email = :email");
+        q.setParameter("email", email);
+        return q.getResultList();
+    }
+
 }
