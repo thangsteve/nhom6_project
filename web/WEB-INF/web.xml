@@ -296,6 +296,34 @@
         <servlet-name>RemoveWishlistServlet</servlet-name>
         <servlet-class>controller.RemoveWishlistServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getdetailCUSTOMERServlet</servlet-name>
+        <servlet-class>controller.getdetailCUSTOMERServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeInfoCustomer</servlet-name>
+        <servlet-class>controller.ChangeInfoCustomer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditAvatarServlet</servlet-name>
+        <servlet-class>controller.EditAvatarServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>resetPasswordServlet</servlet-name>
+        <servlet-class>controller.resetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgetPasswordServlet</servlet-name>
+        <servlet-class>controller.ForgetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getLinkresetPasswordServlet</servlet-name>
+        <servlet-class>controller.getLinkresetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>changePassword</servlet-name>
+        <servlet-class>controller.changePassword</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginadmin</servlet-name>
         <url-pattern>/loginadmin</url-pattern>
@@ -594,6 +622,34 @@
     <servlet-mapping>
         <servlet-name>RemoveWishlistServlet</servlet-name>
         <url-pattern>/RemoveWishlistServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getdetailCUSTOMERServlet</servlet-name>
+        <url-pattern>/getdetailCUSTOMERServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeInfoCustomer</servlet-name>
+        <url-pattern>/ChangeInfoCustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditAvatarServlet</servlet-name>
+        <url-pattern>/EditAvatarServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>resetPasswordServlet</servlet-name>
+        <url-pattern>/resetPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgetPasswordServlet</servlet-name>
+        <url-pattern>/ForgetPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getLinkresetPasswordServlet</servlet-name>
+        <url-pattern>/getLinkresetPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>changePassword</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

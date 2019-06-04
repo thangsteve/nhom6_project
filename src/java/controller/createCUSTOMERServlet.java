@@ -46,20 +46,20 @@ public class createCUSTOMERServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String customerID = "";
             Integer num = Integer.valueOf(customersFacade.count() + 1);
-             switch (num.toString().length()) {
-                    case 1: // '\001'
-                        customerID = (new StringBuilder()).append("PR00").append(num).toString();
-                        break;
+            switch (num.toString().length()) {
+                case 1: // '\001'
+                    customerID = (new StringBuilder()).append("PR00").append(num).toString();
+                    break;
 
-                    case 2: // '\002'
-                        customerID = (new StringBuilder()).append("PR0").append(num).toString();
-                        break;
+                case 2: // '\002'
+                    customerID = (new StringBuilder()).append("PR0").append(num).toString();
+                    break;
 
-                    case 3: // '\003'
-                        customerID = (new StringBuilder()).append("PR").append(num).toString();
-                        break;
-                }
-             String fullname = request.getParameter("fullname");
+                case 3: // '\003'
+                    customerID = (new StringBuilder()).append("PR").append(num).toString();
+                    break;
+            }
+            String fullname = request.getParameter("fullname");
             String phone = request.getParameter("phone");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
@@ -68,8 +68,7 @@ public class createCUSTOMERServlet extends HttpServlet {
             if ("male".equals(request.getParameter("gender"))) {
                 gender = true;
             }
-          
-           LocalDate createddate = LocalDate.now();
+            LocalDate createddate = LocalDate.now();
             if (customersFacade.checkMail(email) == true) {
                 if (customersFacade.checkPhone(phone) == true) {
                     Customers cus = new Customers();
@@ -83,20 +82,20 @@ public class createCUSTOMERServlet extends HttpServlet {
                     cus.setCreatedDate(createddate.toString());
                     cus.setCustomerState(true);
                     customersFacade.create(cus);
-                    request.setAttribute("mes", "Bạn đã đăng ký thành công, vui lòng đăng nhập");
+                    request.setAttribute("mes", "You have successfully registered, please login");
                     request.getRequestDispatcher("logreg.jsp").forward(request, response);
                 } else {
-                    request.setAttribute("error", "Số điện thoại đã có người dùng , vui lòng nhập số điện thoại khác");
+                    request.setAttribute("error", "Phone number already has a user, please enter another phone number");
                     request.getRequestDispatcher("/logreg.jsp").forward(request, response);
                 }
             } else {
-                request.setAttribute("error", "Email đã tồn tại, vui lòng nhập email khác");
+                request.setAttribute("error", "Email already exists, please enter another email");
                 request.getRequestDispatcher("/logreg.jsp").forward(request, response);
             }
         }
-        }
-    
-private String uploadFile(HttpServletRequest request) throws IOException, ServletException {
+    }
+
+    private String uploadFile(HttpServletRequest request) throws IOException, ServletException {
         String fileName = "";
         String filePath = "";
         try {

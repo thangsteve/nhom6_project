@@ -53,7 +53,7 @@
                                 <a href="logreg.jsp">Sign in|| Sign up</a>
                             </li>
                             <%  } else {%> 
-                            <li><a href="#"><%=custom.getFullName()%></a></li>
+                            <li><a href="getdetailCUSTOMERServlet?id=${cusID}">Welcome <%=custom.getFullName()%></a>  <img class="img-sm profile-pic " style="border-radius: 50%"  height="20px" src="uploadDir/${sessionScope.LOGIN_CUSTOMER.avatar}" /></li>
                             <li><a href="logoutServlet">Logout</a></li>
                                 <%       }%>
                         </ul>
@@ -151,8 +151,6 @@
             </div>
         </div>
     </div>
-    <!-- Header Middle Area End Here -->
-    <!-- Begin Header Bottom Area -->
     <div class="header-bottom header-sticky stick d-none d-lg-block d-xl-block">
         <div class="container">
             <div class="row">
@@ -179,14 +177,12 @@
                                         </c:forEach>
                                     </ul>
                                 </li>
-
                                 <li><a href="">News</a></li>
                                 <li><a href="FeedbackServlet">Contacts</a></li>
                                 <li><a href="AboutusServlet">About Us</a></li>
                                 <li class="hb-info f-right p-0 d-sm-none d-lg-block">
                                     <span>590 Cách mạng tháng 8,Quận 3,TP.Hồ Chí Minh</span>
                                 </li>
-                                <!-- Header Bottom Menu Information Area End Here -->
                             </ul>
                         </nav>
                     </div>

@@ -36,5 +36,7 @@ public interface CustomersFacadeLocal {
     public boolean checkMail(String email);
 
     public boolean checkPhone(String phone);
+
+    public List<Customers> findByMail(String email);
     
 }
