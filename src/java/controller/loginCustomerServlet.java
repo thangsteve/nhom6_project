@@ -28,6 +28,8 @@ import model.Wishlist;
  */
 public class loginCustomerServlet extends HttpServlet {
     @EJB
+    private WishlistFacadeLocal wishlistFacade1;
+    @EJB
     private WishlistFacadeLocal wishlistFacade;
     @EJB
     private CustomersFacadeLocal customersFacade;
@@ -45,6 +47,8 @@ public class loginCustomerServlet extends HttpServlet {
                 if (custom.getCustomerState()) {
                        session.setAttribute("LOGIN_CUSTOMER", custom);
                        session.setAttribute("cusID", custom.getCustomerID());
+                         session.setAttribute("countWishlist", wishlistFacade.findByCustomer(custom.getCustomerID()).size());
+    
                          List<Products> productList = new ArrayList<>();
 
                 for (Wishlist item : wishlistFacade.findByCustomer(customersFacade.checkLogin(email, password).getCustomerID())) {

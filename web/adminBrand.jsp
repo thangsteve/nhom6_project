@@ -110,6 +110,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             </c:forEach>
                                         </tbody>
                                     </table>
+                                         <div class="row no-print">
+                                            <div class="col-xs-12">
+                                                <a href="#" target="_blank" onclick="window.print();" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+                                            </div>
+                                        </div>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
                         </div><!-- /.col -->

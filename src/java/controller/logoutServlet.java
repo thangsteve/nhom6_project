@@ -37,6 +37,8 @@ public class logoutServlet extends HttpServlet {
             session.setAttribute("LOGIN_CUSTOMER", null);
             session.setAttribute("LOGIN_ADMIN", null);
             session.setAttribute("cusID", null);
+            session.setAttribute("countWishlist",null);
+    
             request.getRequestDispatcher("ProductServlet").forward(request, response);
 //            response.sendRedirect(request.getContextPath());
         }

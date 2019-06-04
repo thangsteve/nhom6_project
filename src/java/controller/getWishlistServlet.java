@@ -59,7 +59,8 @@ public class getWishlistServlet extends HttpServlet {
             request.setAttribute("listProduct", listProduct);
             request.setAttribute("catelist", listCategory);
             request.setAttribute("brandList", listBrand);
-
+    session.setAttribute("countWishlist", wishlistFacade.findByCustomer(cusId).size());
+        
             request.getRequestDispatcher("wishlist.jsp").forward(request, response);
         }
     }
