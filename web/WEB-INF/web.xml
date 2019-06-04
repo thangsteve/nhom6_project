@@ -285,6 +285,10 @@
         <servlet-class>controller.AdminDetailCategoryServlet</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< HEAD
+        <servlet-name>AutoComplete</servlet-name>
+        <servlet-class>controller.AutoComplete</servlet-class>
+=======
         <servlet-name>getWishListByProduct</servlet-name>
         <servlet-class>controller.getWishListByProduct</servlet-class>
     </servlet>
@@ -323,18 +327,7 @@
     <servlet>
         <servlet-name>changePassword</servlet-name>
         <servlet-class>controller.changePassword</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>adminChangeInfo</servlet-name>
-        <servlet-class>controller.adminChangeInfo</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>adminChangePassword</servlet-name>
-        <servlet-class>controller.adminChangePassword</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AdminNewsServlet</servlet-name>
-        <servlet-class>controller.AdminNewsServlet</servlet-class>
+>>>>>>> d049b940d1326760f0781baeb059ec444f2ecca4
     </servlet>
     <servlet-mapping>
         <servlet-name>loginadmin</servlet-name>
@@ -624,6 +617,10 @@
         <url-pattern>/AdminDetailCategoryServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< HEAD
+        <servlet-name>AutoComplete</servlet-name>
+        <url-pattern>/AutoComplete</url-pattern>
+=======
         <servlet-name>getWishListByProduct</servlet-name>
         <url-pattern>/getWishListByProduct</url-pattern>
     </servlet-mapping>
@@ -662,18 +659,7 @@
     <servlet-mapping>
         <servlet-name>changePassword</servlet-name>
         <url-pattern>/changePassword</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>adminChangeInfo</servlet-name>
-        <url-pattern>/adminChangeInfo</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>adminChangePassword</servlet-name>
-        <url-pattern>/adminChangePassword</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AdminNewsServlet</servlet-name>
-        <url-pattern>/AdminNewsServlet</url-pattern>
+>>>>>>> d049b940d1326760f0781baeb059ec444f2ecca4
     </servlet-mapping>
     <session-config>
         <session-timeout>
