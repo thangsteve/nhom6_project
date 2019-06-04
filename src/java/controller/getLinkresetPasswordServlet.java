@@ -6,63 +6,38 @@
 
 package controller;
 
-import bean.CustomersFacadeLocal;
-import bean.WishlistFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Customers;
-import model.Products;
-import model.Wishlist;
 
-/**
- *
- * @author congm
- */
-public class loginCustomerServlet extends HttpServlet {
-    @EJB
-    private WishlistFacadeLocal wishlistFacade;
-    @EJB
-    private CustomersFacadeLocal customersFacade;
 
-  
+@WebServlet(name = "getLinkresetPasswordServlet", urlPatterns = {"/getLinkresetPasswordServlet"})
+public class getLinkresetPasswordServlet extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-          HttpSession session = request.getSession(true);
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            Customers custom = new Customers();
-            if ((custom = customersFacade.checkLogin(email, password)) != null) {              
-                if (custom.getCustomerState()) {
-                       session.setAttribute("LOGIN_CUSTOMER", custom);
-                       session.setAttribute("cusID", custom.getCustomerID());
-                         List<Products> productList = new ArrayList<>();
-
-                for (Wishlist item : wishlistFacade.findByCustomer(customersFacade.checkLogin(email, password).getCustomerID())) {
-                    productList.add(item.getProductID());
-
-                }
-                    session.setAttribute("wishlist", productList);
-                    request.getRequestDispatcher("ProductServlet").forward(request, response);
-                    
-                } else {
-                    request.setAttribute("error", "Your account has been locked");
-                    request.getRequestDispatcher("logreg.jsp").forward(request, response);
-                }
-            } else {
-                request.setAttribute("error", "Email address or password is invalid");
-                request.getRequestDispatcher("logreg.jsp").forward(request, response);
-            }
-            
+        PrintWriter out = response.getWriter();
+        String resetCode=request.getParameter("resetCode");
+        HttpSession session=request.getSession();
+        if(resetCode.equals(session.getAttribute("numberResetPass").toString())){
+            request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
+        }else{
+            out.print("<h2>Page not found</h2>");
         }
     }
 

@@ -7,11 +7,8 @@
 package controller;
 
 import bean.CustomersFacadeLocal;
-import bean.WishlistFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,52 +16,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Customers;
-import model.Products;
-import model.Wishlist;
 
 /**
  *
- * @author congm
+ * @author ASUS
  */
-public class loginCustomerServlet extends HttpServlet {
-    @EJB
-    private WishlistFacadeLocal wishlistFacade;
+public class changePassword extends HttpServlet {
     @EJB
     private CustomersFacadeLocal customersFacade;
 
-  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-          HttpSession session = request.getSession(true);
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            Customers custom = new Customers();
-            if ((custom = customersFacade.checkLogin(email, password)) != null) {              
-                if (custom.getCustomerState()) {
-                       session.setAttribute("LOGIN_CUSTOMER", custom);
-                       session.setAttribute("cusID", custom.getCustomerID());
-                         List<Products> productList = new ArrayList<>();
-
-                for (Wishlist item : wishlistFacade.findByCustomer(customersFacade.checkLogin(email, password).getCustomerID())) {
-                    productList.add(item.getProductID());
-
-                }
-                    session.setAttribute("wishlist", productList);
-                    request.getRequestDispatcher("ProductServlet").forward(request, response);
-                    
-                } else {
-                    request.setAttribute("error", "Your account has been locked");
-                    request.getRequestDispatcher("logreg.jsp").forward(request, response);
-                }
-            } else {
-                request.setAttribute("error", "Email address or password is invalid");
-                request.getRequestDispatcher("logreg.jsp").forward(request, response);
-            }
-            
+         PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
+        String cusid=request.getParameter("cusid");
+        String pass=request.getParameter("pass");
+        Customers cus = customersFacade.find(cusid);
+        cus.setPassword(pass);
+        customersFacade.edit(cus);
+        request.getRequestDispatcher("logoutServlet").forward(request, response);
         }
-    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
